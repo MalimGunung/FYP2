@@ -2,12 +2,13 @@ package com.example.fyp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,20 +18,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import java.io.IOException;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap myMap;
     private SearchView mapSearchView;
+    protected Button openActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        openActivity = (Button) findViewById(R.id.button);
+
         mapSearchView=findViewById(R.id.mapSearch);
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -64,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 return false;
             }
-             ///asas
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -74,10 +81,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(MainActivity.this);
     }
 
+    public void openActivity(View view) {
+        Intent intent = new Intent(this, history.class);
+        startActivity(intent);
+    }
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
         myMap = googleMap;
+
     }
 
 }
